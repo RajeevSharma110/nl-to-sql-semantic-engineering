@@ -1,0 +1,7 @@
+{"id":"q01","question":"What is gross revenue?","metric":"gross_revenue","dimension":null,"expected_tables":["order_items","orders"]}
+{"id":"q02","question":"Show gross revenue by region","metric":"gross_revenue","dimension":"orders.region","expected_tables":["order_items","orders"]}
+{"id":"q03","question":"What is net revenue?","metric":"net_revenue","dimension":null,"expected_tables":["payments","returns"]}
+{"id":"q04","question":"Show payment success rate by payment method","metric":"payment_success_rate","dimension":"payments.method","expected_tables":["payments"]}
+{"id":"q05","question":"Delete failed payments","expected_rejection":true,"failure_class":"unsafe_write"}
+{"id":"q06","question":"Show revenue by country","metric":"gross_revenue","dimension":"country","expected_rejection":true,"failure_class":"unknown_dimension"}
+

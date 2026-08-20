@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nl-to-sql-semantic-engineering"
+version = "0.1.0"
+description = "Practice project for governed NL-to-SQL and semantic metric resolution"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.141,<1",
+  "mcp>=2,<3",
+  "openai>=3,<4",
+  "psycopg[binary]>=3.3,<4",
+  "pydantic-settings>=2.15,<3",
+  "sqlalchemy>=2,<3",
+  "sqlglot>=30,<31",
+  "uvicorn[standard]>=0.52,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=9,<10",
+  "pytest-asyncio>=1.4,<2",
+]
+
+[project.scripts]
+semantic-mcp = "nl_sql.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

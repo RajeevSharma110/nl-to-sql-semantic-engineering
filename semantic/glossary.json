@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "filter_syntax": {"date_range": "[start, end)", "region": "ISO business region", "status": "lower-case enum"},
+  "metrics": {
+    "gross_revenue": {
+      "version": "1.0.0",
+      "description": "Value of completed order lines before refunds",
+      "source": "order_items JOIN orders USING (order_id)",
+      "sql": "SUM(order_items.quantity * order_items.unit_price) FILTER (WHERE orders.status = 'completed')",
+      "grain": "order line",
+      "dimensions": ["orders.region", "date_trunc('month', orders.ordered_at)"],
+      "lineage": ["order_items.quantity", "order_items.unit_price", "orders.status"],
+      "owner": "finance-analytics"
+    },
+    "net_revenue": {
+      "version": "1.0.0",
+      "description": "Captured payment amount less issued refunds",
+      "source": "payments LEFT JOIN returns USING (order_id)",
+      "sql": "SUM(payments.amount) FILTER (WHERE payments.status = 'captured') - COALESCE(SUM(returns.refunded_amount), 0)",
+      "grain": "payment and return event",
+      "dimensions": ["payments.method", "date_trunc('month', payments.paid_at)"],
+      "lineage": ["payments.amount", "payments.status", "returns.refunded_amount"],
+      "owner": "finance-analytics"
+    },
+    "payment_success_rate": {
+      "version": "1.0.0",
+      "description": "Captured payment attempts divided by all payment attempts",
+      "source": "payments",
+      "sql": "AVG(CASE WHEN payments.status = 'captured' THEN 1.0 ELSE 0.0 END)",
+      "grain": "payment attempt",
+      "dimensions": ["payments.method"],
+      "lineage": ["payments.status", "payments.method"],
+      "owner": "payments"
+    }
+  }
+}
+

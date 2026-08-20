@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nl-sql:contracts:orders:1.0.0",
+  "title": "Orders data contract",
+  "type": "object",
+  "required": ["order_id", "customer_id", "status", "ordered_at", "region"],
+  "properties": {
+    "order_id": {"type": "integer"},
+    "customer_id": {"type": "integer"},
+    "status": {"enum": ["pending", "completed", "cancelled"]},
+    "ordered_at": {"type": "string", "format": "date-time"},
+    "region": {"type": "string", "minLength": 2}
+  },
+  "x-owner": "commerce-platform",
+  "x-consumers": ["semantic-layer", "bi-agent"],
+  "x-compatibility": "backward",
+  "x-sla": {"freshness_minutes": 15, "availability_percent": 99.9},
+  "additionalProperties": false
+}
+

@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "owner": "data-platform",
+  "residency": "EU",
+  "tables": {
+    "customers": {
+      "description": "Customer master at one row per customer",
+      "primary_key": ["customer_id"],
+      "sensitivity": "confidential",
+      "columns": {"customer_id": "bigint", "email": "text", "region": "text", "created_at": "timestamptz"}
+    },
+    "products": {
+      "description": "Product catalog at one row per product",
+      "primary_key": ["product_id"],
+      "columns": {"product_id": "bigint", "category": "text", "name": "text", "unit_price": "numeric"}
+    },
+    "orders": {
+      "description": "Order header at one row per order",
+      "primary_key": ["order_id"],
+      "foreign_keys": {"customer_id": "customers.customer_id"},
+      "columns": {"order_id": "bigint", "customer_id": "bigint", "status": "text", "ordered_at": "timestamptz", "region": "text"}
+    },
+    "order_items": {
+      "description": "Order lines at one row per order and product",
+      "primary_key": ["order_id", "product_id"],
+      "foreign_keys": {"order_id": "orders.order_id", "product_id": "products.product_id"},
+      "columns": {"order_id": "bigint", "product_id": "bigint", "quantity": "integer", "unit_price": "numeric"}
+    },
+    "payments": {
+      "description": "Payment attempts",
+      "primary_key": ["payment_id"],
+      "foreign_keys": {"order_id": "orders.order_id"},
+      "columns": {"payment_id": "bigint", "order_id": "bigint", "status": "text", "method": "text", "amount": "numeric", "paid_at": "timestamptz"}
+    },
+    "returns": {
+      "description": "Returned product quantities",
+      "primary_key": ["return_id"],
+      "foreign_keys": {"order_id": "orders.order_id", "product_id": "products.product_id"},
+      "columns": {"return_id": "bigint", "order_id": "bigint", "product_id": "bigint", "quantity": "integer", "refunded_amount": "numeric", "returned_at": "timestamptz"}
+    }
+  }
+}
+
