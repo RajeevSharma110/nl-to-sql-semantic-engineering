@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Governed NL-to-SQL semantic engineering workbench">
+  <title>Semantiq — NL-to-SQL Workbench</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Semantiq home">
+        <span class="brand-mark">S</span>
+        <span><strong>semantiq</strong><small>data workbench</small></span>
+      </a>
+
+      <nav aria-label="Primary navigation">
+        <a class="nav-item active" href="#workbench"><span>⌁</span>Workbench</a>
+        <a class="nav-item" href="#catalog"><span>▦</span>Metric catalog</a>
+        <a class="nav-item" href="#governance"><span>◇</span>Governance</a>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="environment-card">
+          <span class="eyebrow">ENVIRONMENT</span>
+          <div><span class="status-dot"></span>Practice / EU</div>
+          <small>PostgreSQL 16 · Read only</small>
+        </div>
+        <a class="github-link" href="https://github.com/RajeevSharma110/nl-to-sql-semantic-engineering" target="_blank" rel="noreferrer">View source ↗</a>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">SEMANTIC DATA ENGINEERING</p>
+          <h1>Query workbench</h1>
+        </div>
+        <div class="health-pill" id="health-pill"><span class="status-dot"></span><span>Checking services</span></div>
+      </header>
+
+      <section class="hero" id="workbench">
+        <div class="hero-copy">
+          <span class="section-kicker">GOVERNED NATURAL LANGUAGE</span>
+          <h2>Ask the business.<br><em>Trust the answer.</em></h2>
+          <p>Every question resolves through versioned metrics, validated SQL, a PostgreSQL dry-run, and least-privilege execution.</p>
+        </div>
+
+        <form class="query-card" id="query-form">
+          <label for="question">Business question</label>
+          <textarea id="question" name="question" rows="3" placeholder="e.g. Show gross revenue by region" required></textarea>
+          <div class="example-row" aria-label="Example questions">
+            <button type="button" class="example" data-question="Show gross revenue by region">Revenue by region</button>
+            <button type="button" class="example" data-question="What is net revenue by payment method?">Net revenue</button>
+            <button type="button" class="example" data-question="Show payment success rate by payment method">Payment success</button>
+          </div>
+          <div class="query-actions">
+            <span class="helper"><kbd>⌘</kbd><kbd>↵</kbd> to run</span>
+            <button class="primary-button" type="submit"><span>Generate governed SQL</span><b>→</b></button>
+          </div>
+        </form>
+      </section>
+
+      <section class="result-section" id="result-section" hidden aria-live="polite">
+        <div class="section-heading">
+          <div><span class="eyebrow">RESOLUTION EVIDENCE</span><h2>Query result</h2></div>
+          <span class="decision-badge" id="decision-badge">Validated</span>
+        </div>
+
+        <div class="result-grid">
+          <article class="panel sql-panel">
+            <div class="panel-head">
+              <div><span class="panel-label">COMPILED POSTGRESQL</span><strong id="resolved-metric">—</strong></div>
+              <button class="ghost-button" id="copy-sql" type="button">Copy SQL</button>
+            </div>
+            <pre><code id="sql-output"></code></pre>
+            <div class="lineage" id="lineage"></div>
+          </article>
+
+          <aside class="evidence-panel">
+            <article class="panel trust-card">
+              <div class="trust-ring" id="trust-ring"><span id="trust-score">—</span><small>TRUST</small></div>
+              <div><span class="panel-label">DECISION</span><h3 id="trust-decision">—</h3><p id="trust-reason">Grounded in governed definitions</p></div>
+            </article>
+            <article class="panel checks-card">
+              <div class="check-row"><span class="check-icon">✓</span><div><strong>SQL validation</strong><small>Read-only AST policy</small></div></div>
+              <div class="check-row"><span class="check-icon">✓</span><div><strong>PostgreSQL dry-run</strong><small id="dry-run-cost">Waiting</small></div></div>
+              <div class="check-row"><span class="check-icon">✓</span><div><strong>Data access</strong><small>SELECT-only role</small></div></div>
+            </article>
+          </aside>
+        </div>
+
+        <article class="panel data-panel">
+          <div class="panel-head"><div><span class="panel-label">RESULT PREVIEW</span><strong id="row-summary">0 rows</strong></div></div>
+          <div class="table-wrap"><table id="result-table"><thead></thead><tbody></tbody></table></div>
+        </article>
+      </section>
+
+      <section class="catalog-section" id="catalog">
+        <div class="section-heading">
+          <div><span class="eyebrow">SEMANTIC LAYER · V1.0.0</span><h2>Governed metric catalog</h2></div>
+          <p>One definition, shared consistently across agents and BI.</p>
+        </div>
+        <div class="metric-grid" id="metric-grid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+      </section>
+
+      <section class="governance-section" id="governance">
+        <div class="governance-copy">
+          <span class="section-kicker">TRUST BY DESIGN</span>
+          <h2>Meaning is governed.<br>Execution is constrained.</h2>
+          <p>The LLM may propose intent. The semantic layer defines meaning. Deterministic controls decide whether SQL is safe enough to run.</p>
+        </div>
+        <div class="control-list">
+          <div><span>01</span><strong>Schema registry</strong><small>6 tables · versioned relationships</small></div>
+          <div><span>02</span><strong>Query policy</strong><small>SELECT-only · allowlists · row caps</small></div>
+          <div><span>03</span><strong>Trust scoring</strong><small>Evidence-based execute / review / clarify</small></div>
+          <div><span>04</span><strong>Data contracts</strong><small>Ownership · compatibility · SLA</small></div>
+        </div>
+      </section>
+
+      <footer><span>Semantiq practice environment</span><span>Built for transparent, governed analytics</span></footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
+
